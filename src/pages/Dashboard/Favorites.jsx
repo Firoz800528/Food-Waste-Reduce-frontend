@@ -28,7 +28,6 @@ const Favorites = () => {
             <p>Status: {fav.status}</p>
             <p>Quantity: {fav.quantity}</p>
             <div className="flex gap-2 mt-3">
-              <Link to={`/donations/${fav._id}`} className="btn btn-primary btn-sm">View Details</Link>
               <button onClick={() => handleRemove(fav._id)} className="btn btn-sm btn-error">Remove</button>
             </div>
           </div>

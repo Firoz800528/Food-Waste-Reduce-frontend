@@ -8,6 +8,7 @@ const Transactions = () => {
   useEffect(() => {
     axiosInstance.get('/user/transactions')
       .then(res => {
+        console.log('Transactions:', res.data)  // Check data structure
         setTransactions(res.data)
         setLoading(false)
       })
@@ -35,7 +36,7 @@ const Transactions = () => {
               <td className="border border-gray-300 p-2">{tx.transactionId}</td>
               <td className="border border-gray-300 p-2">${tx.amount}</td>
               <td className="border border-gray-300 p-2">{new Date(tx.date).toLocaleDateString()}</td>
-              <td className="border border-gray-300 p-2">{tx.status}</td>
+              <td className="border border-gray-300 p-2">{tx.status || 'Paid'}</td> {/* Fallback */}
             </tr>
           ))}
         </tbody>

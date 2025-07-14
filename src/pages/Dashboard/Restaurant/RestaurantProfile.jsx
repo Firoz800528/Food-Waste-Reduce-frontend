@@ -32,27 +32,28 @@ const RestaurantProfile = () => {
 
   if (loading) return <p>Loading profile...</p>
   if (error) return <p className="text-red-600">{error}</p>
-  if (!profile) return <p>No profile found.</p>
+
+  
+  const displayName = profile?.name || user?.displayName || 'No Name'
+  const displayEmail = profile?.email || user?.email || 'No Email'
 
   return (
     <div className="max-w-xl mx-auto bg-white p-6 rounded shadow">
       <h2 className="text-2xl font-semibold mb-4">Restaurant Profile</h2>
 
       <div className="mb-4">
-        <strong>Name:</strong> {profile.name}
+        <strong>Name:</strong> {displayName}
       </div>
 
       <div className="mb-4">
-        <strong>Email:</strong> {profile.email}
+        <strong>Email:</strong> {displayEmail}
       </div>
 
-      {profile.role && (
-        <div className="mb-4">
-          <strong>Role:</strong> {profile.role}
-        </div>
-      )}
+      <div className="mb-4">
+        <p><strong>Role:</strong> Restaurant</p>
+      </div>
 
-      {profile.restaurantImage && (
+      {profile?.restaurantImage && (
         <div className="mb-4">
           <strong>Logo/Image:</strong>
           <img
@@ -63,19 +64,19 @@ const RestaurantProfile = () => {
         </div>
       )}
 
-      {profile.address && (
+      {profile?.address && (
         <div className="mb-4">
           <strong>Address:</strong> {profile.address}
         </div>
       )}
 
-      {profile.contactNumber && (
+      {profile?.contactNumber && (
         <div className="mb-4">
           <strong>Contact Number:</strong> {profile.contactNumber}
         </div>
       )}
 
-      {profile.joinedDate && (
+      {profile?.joinedDate && (
         <div className="mb-4">
           <strong>Joined Date:</strong>{' '}
           {new Date(profile.joinedDate).toLocaleDateString()}
