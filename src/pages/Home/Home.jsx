@@ -1,3 +1,4 @@
+// src/pages/Home/Home.jsx
 import { useQuery } from '@tanstack/react-query'
 import Banner from '../../components/Banner'
 import { Link } from 'react-router-dom'
@@ -8,7 +9,6 @@ const Home = () => {
   const axiosSecure = useAxiosSecure()
   const [isAdmin, setIsAdmin] = useState(false)
 
-
   useEffect(() => {
     axiosSecure.get('/api/me')
       .then(res => {
@@ -17,16 +17,15 @@ const Home = () => {
       .catch(() => setIsAdmin(false))
   }, [axiosSecure])
 
-  
+  // ✅ Fetch only verified donations now
   const { data: donations = [] } = useQuery({
-    queryKey: ['featuredDonations'],
+    queryKey: ['verifiedDonations'],
     queryFn: async () => {
-      const res = await axiosSecure.get('/api/donations')
+      const res = await axiosSecure.get('/api/donations/verified')
       return res.data
     }
   })
 
- 
   const { data: charityRequests = [] } = useQuery({
     queryKey: ['charityRequests'],
     enabled: isAdmin,
@@ -38,10 +37,9 @@ const Home = () => {
 
   return (
     <div className="max-w-7xl mx-auto px-4">
-  
       <Banner />
 
-     
+      {/* ✅ Featured Donations Section */}
       <h1 className="text-3xl font-bold mt-10 mb-4">Featured Donations</h1>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {donations.slice(0, 4).map(donation => (
@@ -63,7 +61,6 @@ const Home = () => {
         ))}
       </div>
 
-   
       {isAdmin && (
         <>
           <h2 className="text-3xl font-bold mt-16 mb-4">Latest Charity Requests</h2>
@@ -84,7 +81,7 @@ const Home = () => {
         </>
       )}
 
-  
+      {/* Impact Stats */}
       <h2 className="text-3xl font-bold mt-16 mb-4">Impact Stats</h2>
       <div className="grid md:grid-cols-3 gap-6 text-center">
         <div className="bg-green-100 p-6 rounded-lg shadow">
@@ -101,7 +98,7 @@ const Home = () => {
         </div>
       </div>
 
-  
+      {/* Community Stories */}
       <h2 className="text-3xl font-bold mt-16 mb-4">Community Stories</h2>
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
         {[{ id: 1, title: 'Hope Charity feeds 1,000+ people', content: 'Thanks to local restaurants and the Food Waste Platform, Hope Charity was able to organize a food drive that helped over 1,000 individuals in need.' },

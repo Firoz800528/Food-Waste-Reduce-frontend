@@ -11,12 +11,13 @@ const AddDonation = () => {
 
   const onSubmit = async data => {
     try {
-      
       const payload = {
         ...data,
+        image: data.image, // this will be a URL
         restaurantName: user.name,
         restaurantEmail: user.email,
       }
+
       await axios.post('/api/donations', payload)
       toast.success('Donation added, pending approval')
       reset()
@@ -34,6 +35,15 @@ const AddDonation = () => {
         <input {...register('foodType', { required: true })} placeholder="Food Type" className="input input-bordered w-full" />
         <input {...register('quantity', { required: true })} placeholder="Quantity (e.g., 5 kg)" className="input input-bordered w-full" />
         <input type="text" {...register('restaurantLocation')} placeholder="Location" className="input input-bordered w-full" defaultValue={user.location || ''} />
+
+        {/* Image URL Field */}
+        <input
+          type="text"
+          placeholder="Image URL (e.g., https://...)"
+          {...register('image', { required: true })}
+          className="input input-bordered w-full"
+        />
+
         <button type="submit" className="btn btn-primary w-full">Add Donation</button>
       </form>
     </div>

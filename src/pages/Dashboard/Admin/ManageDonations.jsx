@@ -28,7 +28,7 @@ const ManageDonations = () => {
 
   const handleReject = async (id) => {
     try {
-      await axiosSecure.patch(`/api/donations/${id}/reject`)  // You need to implement this endpoint
+      await axiosSecure.patch(`/api/donations/${id}/reject`) 
       toast.success('Donation rejected successfully!')
       queryClient.invalidateQueries(['donations'])
     } catch (error) {
