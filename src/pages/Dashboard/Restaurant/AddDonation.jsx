@@ -3,17 +3,19 @@ import { useForm } from 'react-hook-form'
 import useAxiosSecure from '../../../hooks/useAxiosSecure'
 import { toast } from 'react-toastify'
 import { useAuth } from '../../../hooks/useAuth'
+import { useNavigate } from 'react-router-dom'
 
 const AddDonation = () => {
   const { user } = useAuth()
   const axios = useAxiosSecure()
   const { register, handleSubmit, reset } = useForm()
+  const navigate = useNavigate() 
 
   const onSubmit = async data => {
     try {
       const payload = {
         ...data,
-        image: data.image, // this will be a URL
+        image: data.image,
         restaurantName: user.name,
         restaurantEmail: user.email,
       }
@@ -21,6 +23,7 @@ const AddDonation = () => {
       await axios.post('/api/donations', payload)
       toast.success('Donation added, pending approval')
       reset()
+      navigate('/dashboard/restaurant/my-donations') 
     } catch (error) {
       toast.error('Failed to add donation')
       console.error('AddDonation error:', error)
@@ -35,15 +38,7 @@ const AddDonation = () => {
         <input {...register('foodType', { required: true })} placeholder="Food Type" className="input input-bordered w-full" />
         <input {...register('quantity', { required: true })} placeholder="Quantity (e.g., 5 kg)" className="input input-bordered w-full" />
         <input type="text" {...register('restaurantLocation')} placeholder="Location" className="input input-bordered w-full" defaultValue={user.location || ''} />
-
-        {/* Image URL Field */}
-        <input
-          type="text"
-          placeholder="Image URL (e.g., https://...)"
-          {...register('image', { required: true })}
-          className="input input-bordered w-full"
-        />
-
+        <input type="text" {...register('image', { required: true })} placeholder="Image URL (e.g., https://...)" className="input input-bordered w-full" />
         <button type="submit" className="btn btn-primary w-full">Add Donation</button>
       </form>
     </div>

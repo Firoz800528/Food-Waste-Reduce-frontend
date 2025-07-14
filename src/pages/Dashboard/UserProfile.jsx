@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { useAuth } from '../../hooks/useAuth'
 
 const UserProfile = () => {
@@ -10,9 +11,15 @@ const UserProfile = () => {
   return (
     <div className="max-w-xl mx-auto bg-white p-6 rounded shadow">
       <h2 className="text-2xl font-semibold mb-4">My Profile</h2>
+
       {user.photoURL && (
-        <img src={user.photoURL} alt="Profile" className="w-24 h-24 rounded-full mb-4" />
+        <img
+          src={user.photoURL}
+          alt="Profile"
+          className="w-24 h-24 rounded-full mb-4 border border-primary"
+        />
       )}
+
       <p><strong>Name:</strong> {user.name || user.displayName || 'N/A'}</p>
       <p><strong>Email:</strong> {user.email}</p>
       <p><strong>Role:</strong> {user.role || 'user'}</p>
