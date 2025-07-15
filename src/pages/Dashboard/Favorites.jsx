@@ -18,6 +18,8 @@ const Favorites = () => {
   }
 
   return (
+    <div>
+      <h1 className="text-2xl font-bold mb-4">Favorites</h1>
     <div className="grid md:grid-cols-2 gap-4">
       {favorites.map(fav => (
         <div key={fav._id} className="card bg-base-100 shadow-md">
@@ -33,6 +35,7 @@ const Favorites = () => {
           </div>
         </div>
       ))}
+    </div>
     </div>
   )
 }

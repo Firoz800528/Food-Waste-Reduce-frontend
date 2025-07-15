@@ -4,12 +4,12 @@ import { useNavigate } from 'react-router-dom'
 import axios from 'axios'
 
 const SocialLogin = () => {
-  const { googleLogin, setBackendUser } = useAuth() 
+  const { googleLogin, setBackendUser } = useAuth()
   const navigate = useNavigate()
 
   const handleGoogleSignIn = () => {
     googleLogin()
-      .then(async (res) => {
+      .then(async res => {
         const user = res.user
         const saveUser = {
           name: user.displayName,
@@ -18,14 +18,12 @@ const SocialLogin = () => {
           role: 'user',
         }
 
-        
         const response = await axios.post(
           `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/register`,
           saveUser
         )
         localStorage.setItem('access-token', response.data.token)
 
-        
         const userRes = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/users/me`,
           {
@@ -35,20 +33,25 @@ const SocialLogin = () => {
           }
         )
 
-        setBackendUser(userRes.data) 
+        setBackendUser(userRes.data)
 
         toast.success('Logged in with Google')
         navigate('/')
       })
-      .catch((err) => {
+      .catch(err => {
         toast.error('Google Login Failed')
         console.error(err)
       })
   }
 
   return (
-    <div className="text-center mt-4">
-      <button onClick={handleGoogleSignIn} className="btn btn-outline w-full">
+    <div className="text-center mt-6">
+      <button
+        onClick={handleGoogleSignIn}
+        className="btn btn-outline w-full max-w-xs mx-auto"
+        aria-label="Continue with Google"
+        style={{ borderColor: '#F1AA5F', color: '#F1AA5F' }}
+      >
         Continue with Google
       </button>
     </div>

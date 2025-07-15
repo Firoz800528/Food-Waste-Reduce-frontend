@@ -13,7 +13,6 @@ const Register = () => {
       await registerUser(data.email, data.password)
       await updateUserProfile(data.name, data.photo)
 
-      
       const registerRes = await fetch('http://localhost:5000/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -42,7 +41,6 @@ const Register = () => {
       const result = await loginWithGoogle()
       const user = result.user
 
-      
       const registerRes = await fetch('http://localhost:5000/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -58,7 +56,6 @@ const Register = () => {
         throw new Error('Register failed')
       }
 
-      
       const loginRes = await fetch('http://localhost:5000/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -78,54 +75,73 @@ const Register = () => {
   }
 
   return (
-    <div className="max-w-md mx-auto my-10">
-      <h2 className="text-3xl font-bold text-center mb-6">Register</h2>
-      
+    <div className="max-w-md mx-auto my-12 p-6 bg-white dark:bg-gray-900 rounded-lg shadow-md">
+      <h2
+        className="text-3xl font-bold text-center mb-6"
+        style={{ color: '#F1AA5F' }}
+      >
+        Register
+      </h2>
+
       <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
         <input
           {...register('name', { required: true })}
           type="text"
           placeholder="Full Name"
-          className="input input-bordered w-full"
+          className="input input-bordered w-full focus:ring-[#F1AA5F]"
         />
         <input
           {...register('photo')}
           type="text"
           placeholder="Photo URL"
-          className="input input-bordered w-full"
+          className="input input-bordered w-full focus:ring-[#F1AA5F]"
         />
         <input
           {...register('email', { required: true })}
           type="email"
           placeholder="Email"
-          className="input input-bordered w-full"
+          className="input input-bordered w-full focus:ring-[#F1AA5F]"
+          autoComplete="email"
         />
         <input
           {...register('password', { required: true })}
           type="password"
           placeholder="Password"
-          className="input input-bordered w-full"
+          className="input input-bordered w-full focus:ring-[#F1AA5F]"
+          autoComplete="new-password"
         />
-        <button type="submit" className="btn btn-primary w-full">Register</button>
+        <button
+          type="submit"
+          className="btn w-full text-white"
+          style={{ backgroundColor: '#F1AA5F' }}
+        >
+          Register
+        </button>
       </form>
 
       <div className="divider">OR</div>
 
       <button
         onClick={handleGoogleRegister}
-        className="btn btn-outline w-full flex items-center justify-center"
+        className="btn btn-outline w-full flex items-center justify-center space-x-2"
+        style={{ borderColor: '#F1AA5F', color: '#F1AA5F' }}
       >
         <img
-          src="https://i.ibb.co/4pDNDk1/google.png"
+          src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c1/Google_%22G%22_logo.svg/768px-Google_%22G%22_logo.svg.png"
           alt="Google"
-          className="w-5 h-5 mr-2"
+          className="w-5 h-5"
+          aria-hidden="true"
         />
-        Sign up with Google
+        <span>Sign up with Google</span>
       </button>
 
-      <p className="text-center mt-4">
+      <p className="text-center mt-4 text-gray-700 dark:text-gray-300">
         Already have an account?{' '}
-        <Link to="/login" className="text-primary font-semibold hover:underline">
+        <Link
+          to="/login"
+          className="font-semibold hover:underline"
+          style={{ color: '#F1AA5F' }}
+        >
           Login here
         </Link>
       </p>
