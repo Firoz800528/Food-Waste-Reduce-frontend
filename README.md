@@ -1,13 +1,21 @@
 # ♻️ Local Food Waste Reduction Platform
 
-A full-stack MERN-based platform designed to reduce food waste by connecting **Restaurants**, **Charities**, and **Users**. Restaurants can donate surplus food, Charities can request and pick up verified donations, and Users can browse, favorite, and review donations.
+A full-stack MERN-based platform designed to reduce food waste by connecting **Admin**, **Restaurants**, **Charities**, and **Users**. Admin can delete any user and provide any any role to any user, Restaurants can donate surplus food, Charities can request and pick up verified donations, and Users can browse, favorite, and review donations.
 
 ### 🔗 Live Site
 [🌐 Visit Website](https://foode-waste-platform.web.app/)
 
 ### 🛠 Admin Credentials
 - **Username (Email):** admin@food.com  
-- **Password:** 123456
+- **Password:** Admin800528
+
+### 🛠 Restaurant Credentials
+- **Username (Restaurant):** restaurant@food.com  
+- **Password:** Admin800528
+
+### 🛠 Charity Credentials
+- **Username (Charity):** charity@food.com  
+- **Password:** Admin800528
 
 ---
 
@@ -31,13 +39,9 @@ A full-stack MERN-based platform designed to reduce food waste by connecting **R
 ## 🚀 Tech Stack
 
 - **Frontend:** React.js, Tailwind CSS, DaisyUI, React Router
-- **Backend:** Express.js, MongoDB (Native Driver)
+- **Backend:** Express.js, MongoDB
 - **Authentication:** Firebase Auth + JWT
 - **Payment:** Stripe API
 - **State Management:** React Query (TanStack Query)
-- **Deployment:** Vercel (Frontend), Vercel/Render (Backend)
-
----
-
-## 📁 Project Structure
+- **Deployment:** Firebase (Frontend), Vercel (Backend)
 

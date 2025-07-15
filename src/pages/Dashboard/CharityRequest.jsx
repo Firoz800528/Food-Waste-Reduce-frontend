@@ -12,6 +12,9 @@ const CharityRequest = () => {
   const { user } = useAuth()
   const [alreadyRequested, setAlreadyRequested] = useState(false)
   const [clientSecret, setClientSecret] = useState('')
+  const [organizationName, setOrganizationName] = useState('')
+  const [missionStatement, setMissionStatement] = useState('')
+  const [imageLink, setImageLink] = useState('')
   const axiosSecure = useAxiosSecure()
 
   useEffect(() => {
@@ -26,13 +29,18 @@ const CharityRequest = () => {
       })
   }, [])
 
-  const handlePaymentIntent = async () => {
+  const handlePaymentIntent = async (e) => {
+    e.preventDefault()
     try {
       const token = localStorage.getItem('access-token')
-      console.log('📦 Sending Token:', token)
-
       if (!token) {
         console.error('❌ No access-token found in localStorage')
+        return
+      }
+
+      // Make sure organizationName and missionStatement are provided before creating payment intent
+      if (!organizationName.trim() || !missionStatement.trim()) {
+        toast.error('Please fill out organization name and mission statement.')
         return
       }
 
@@ -52,21 +60,55 @@ const CharityRequest = () => {
     }
   }
 
+  if (alreadyRequested) {
+    return (
+      <div className="max-w-lg mx-auto">
+        <h2 className="text-2xl font-bold mb-4">Request Charity Role</h2>
+        <p className="text-red-500">You already have a pending or approved request.</p>
+      </div>
+    )
+  }
+
   return (
     <div className="max-w-lg mx-auto">
       <h2 className="text-2xl font-bold mb-4">Request Charity Role</h2>
-      {alreadyRequested ? (
-        <p className="text-red-500">You already have a pending or approved request.</p>
+      {!clientSecret ? (
+        <form onSubmit={handlePaymentIntent} className="space-y-4">
+          <input
+            type="text"
+            placeholder="Organization Name"
+            value={organizationName}
+            onChange={(e) => setOrganizationName(e.target.value)}
+            className="input input-bordered w-full"
+            required
+          />
+          <textarea
+            placeholder="Mission Statement"
+            value={missionStatement}
+            onChange={(e) => setMissionStatement(e.target.value)}
+            className="textarea textarea-bordered w-full"
+            required
+          />
+          <input
+            type="url"
+            placeholder="Image Link (optional)"
+            value={imageLink}
+            onChange={(e) => setImageLink(e.target.value)}
+            className="input input-bordered w-full"
+          />
+          <button type="submit" className="btn btn-primary">
+            Pay $25 & Submit
+          </button>
+        </form>
       ) : (
-        <>
-          {!clientSecret ? (
-            <button onClick={handlePaymentIntent} className="btn btn-primary">Pay $25 & Submit</button>
-          ) : (
-            <Elements stripe={stripePromise} options={{ clientSecret }}>
-              <CharityCheckoutForm clientSecret={clientSecret} />
-            </Elements>
-          )}
-        </>
+        <Elements stripe={stripePromise} options={{ clientSecret }}>
+          <CharityCheckoutForm
+            clientSecret={clientSecret}
+            organizationName={organizationName}
+            missionStatement={missionStatement}
+            imageLink={imageLink}
+          />
+        </Elements>
       )}
     </div>
   )

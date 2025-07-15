@@ -41,7 +41,7 @@ const Navbar = () => {
         {/* Logo */}
         <Link to="/" className="text-xl font-bold flex items-center gap-2">
           <span className="text-4xl" role="img" aria-label="logo">🍽️</span>
-          <span className="hidden sm:inline">Food Waste</span>
+          <span className="hidden sm:inline">Food Waste Reduction</span>
         </Link>
 
         {/* Desktop nav */}

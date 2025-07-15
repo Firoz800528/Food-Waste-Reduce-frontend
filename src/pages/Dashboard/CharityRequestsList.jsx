@@ -29,7 +29,7 @@ const CharityRequestsList = () => {
     try {
       await axiosSecure.patch(`/api/charity-requests/${requestId}/approve`, { userEmail })
       toast.success('Request approved and role assigned!')
-      await fetchRequests()  
+      await fetchRequests()
     } catch (err) {
       console.error(err)
       toast.error('Failed to approve request')
@@ -43,7 +43,7 @@ const CharityRequestsList = () => {
     try {
       await axiosSecure.patch(`/api/charity-requests/${requestId}/reject`)
       toast.success('Request rejected')
-      await fetchRequests() 
+      await fetchRequests()
     } catch (err) {
       console.error(err)
       toast.error('Failed to reject request')
@@ -62,7 +62,7 @@ const CharityRequestsList = () => {
           <thead className="bg-gray-100 text-xs sm:text-sm text-gray-700 uppercase">
             <tr>
               <th className="px-4 py-3 border">#</th>
-              <th className="px-4 py-3 border">Name</th>
+              {/* Name column removed */}
               <th className="px-4 py-3 border">Email</th>
               <th className="px-4 py-3 border">Organization</th>
               <th className="px-4 py-3 border">Mission</th>
@@ -75,7 +75,7 @@ const CharityRequestsList = () => {
             {requests.map((req, idx) => (
               <tr key={req._id} className="hover:bg-gray-50">
                 <td className="px-4 py-2 border">{idx + 1}</td>
-                <td className="px-4 py-2 border">{req.name}</td>
+                {/* Name cell removed */}
                 <td className="px-4 py-2 border break-all">{req.email}</td>
                 <td className="px-4 py-2 border">{req.organization || req.organizationName}</td>
                 <td className="px-4 py-2 border">{req.mission || req.missionStatement}</td>
@@ -85,7 +85,7 @@ const CharityRequestsList = () => {
                   {req.status === 'Pending' ? (
                     <div className="flex flex-wrap justify-center gap-2">
                       <button
-                        onClick={() => handleApprove(req._id, req.email)} // pass user email here
+                        onClick={() => handleApprove(req._id, req.email)}
                         disabled={loadingActionId === req._id}
                         className={`bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-xs sm:text-sm ${
                           loadingActionId === req._id ? 'opacity-50 cursor-not-allowed' : ''

@@ -38,6 +38,8 @@ import AdminDashboard from '../pages/Dashboard/Admin/AdminDashboard'
 
 import DashboardWrapper from '../pages/Dashboard/DashboardWrapper'
 import DonationStatistics from '../pages/Dashboard/Restaurant/DonationStatistics'
+import About from '../pages/About'
+import Contact from '../pages/Contact'
 
 const routes = createBrowserRouter([
   {
@@ -76,6 +78,7 @@ const routes = createBrowserRouter([
           { path: 'transactions', element: <Transactions /> },
         ],
       },
+
       
 
       // Restaurant Dashboard
@@ -124,6 +127,9 @@ const routes = createBrowserRouter([
       },
     ],
   },
+
+  { path: '/about', element: <About /> },
+      { path: '/contact', element: <Contact /> },
 
   // Auth routes without MainLayout (no navbar/footer)
   {

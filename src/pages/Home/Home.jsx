@@ -41,45 +41,59 @@ const Home = () => {
 
       {/* ✅ Featured Donations Section */}
       <h1 className="text-3xl font-bold mt-10 mb-4">Featured Donations</h1>
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-        {donations.slice(0, 4).map(donation => (
-          <div key={donation._id} className="card bg-base-100 shadow-lg border">
-            <figure>
-              <img src={donation.image} alt={donation.title} className="w-full h-48 object-cover" />
-            </figure>
-            <div className="card-body">
-              <h2 className="card-title">{donation.title}</h2>
-              <p><span className="font-semibold">Type:</span> {donation.foodType}</p>
-              <p><span className="font-semibold">Restaurant:</span> {donation.restaurantName}</p>
-              <p><span className="font-semibold">Location:</span> {donation.restaurantLocation}</p>
-              <p><span className="font-semibold">Status:</span> {donation.status}</p>
-              <div className="card-actions mt-4 justify-end">
-                <Link to={`/donations/${donation._id}`} className="btn btn-primary btn-sm">View Details</Link>
+<div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+  {[...donations].reverse().slice(0, 4).map(donation => (
+    <div key={donation._id} className="card bg-base-100 shadow-lg border">
+      <figure>
+        <img src={donation.image} alt={donation.title} className="w-full h-48 object-cover" />
+      </figure>
+      <div className="card-body">
+        <h2 className="card-title">{donation.title}</h2>
+        <p><span className="font-semibold">Type:</span> {donation.foodType}</p>
+        <p><span className="font-semibold">Restaurant:</span> {donation.restaurantName}</p>
+        <p><span className="font-semibold">Location:</span> {donation.restaurantLocation}</p>
+        <p><span className="font-semibold">Status:</span> {donation.status}</p>
+        <div className="card-actions mt-4 justify-end">
+          <Link to={`/donations/${donation._id}`} className="btn btn-primary btn-sm">View Details</Link>
+        </div>
+      </div>
+    </div>
+  ))}
+</div>
+
+
+   {isAdmin && charityRequests.length > 0 && (
+  <>
+    <h2 className="text-3xl font-bold mt-16 mb-4">Latest Charity Requests</h2>
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+      {[...charityRequests].reverse().slice(0, 3).map(request => (
+        <div key={request._id} className="card bg-base-100 shadow-md border">
+          <div className="card-body">
+            <div className="flex items-center gap-4 mb-3">
+              <img
+  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ0fpsEQvVYrq_RGYZ-N36HvvcYSWMlNLzOAt5n7rbyzkRJUqFVILjJ3TlS880k0L6O-wI&usqp=CAU"
+  alt="Charity"
+  className="w-12 h-12 rounded-full object-cover border"
+/>
+
+              <div>
+                <h3 className="text-lg font-semibold">{request.organizationName}</h3>
               </div>
             </div>
+            <p className="text-gray-600 dark:text-gray-400 text-sm mb-2">
+              <strong>Mission Statement:</strong> {request.missionStatement}
+            </p>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              <strong>Status:</strong> {request.status}
+            </p>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
+    </div>
+  </>
+)}
 
-      {isAdmin && (
-        <>
-          <h2 className="text-3xl font-bold mt-16 mb-4">Latest Charity Requests</h2>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {charityRequests.slice(0, 3).map(request => (
-              <div key={request._id} className="card bg-base-100 shadow-md border">
-                <div className="card-body">
-                  <div className="flex items-center gap-3 mb-2">
-                    <img src={request.charityImage} alt={request.charityName} className="w-10 h-10 rounded-full" />
-                    <h3 className="font-bold">{request.charityName}</h3>
-                  </div>
-                  <p><span className="font-semibold">Donation:</span> {request.donationTitle}</p>
-                  <p className="text-gray-700 mt-2">{request.description}</p>
-                </div>
-              </div>
-            ))}
-          </div>
-        </>
-      )}
+
 
       {/* Impact Stats */}
       <h2 className="text-3xl font-bold mt-16 mb-4">Impact Stats</h2>
