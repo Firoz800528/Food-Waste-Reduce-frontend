@@ -2,7 +2,7 @@ import React from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { toast } from 'react-toastify'
 import useAxiosSecure from '../../../hooks/useAxiosSecure'
-import { FaTrash, FaClock, FaCheckCircle, FaTimesCircle } from 'react-icons/fa'
+import { FaTrash, FaCheckCircle } from 'react-icons/fa'
 
 const MyRequests = () => {
   const axiosSecure = useAxiosSecure()
@@ -25,7 +25,8 @@ const MyRequests = () => {
 
   const cancelMutation = useMutation({
     mutationFn: async (id) => {
-      await axiosSecure.delete(`/api/charity/my-requests/${id}`)
+      // FIXED: Correct DELETE endpoint path
+      await axiosSecure.delete(`/api/donation-requests/${id}`)
     },
     onSuccess: () => {
       queryClient.invalidateQueries(['charity-requests'])
@@ -110,7 +111,7 @@ const MyRequests = () => {
                   )}
                   
                   {request.status === 'Accepted' && (
-                    <button className="btn btn-success btn-sm">
+                    <button className="btn btn-success btn-sm" disabled>
                       <FaCheckCircle className="mr-1" />
                       Pickup Scheduled
                     </button>
