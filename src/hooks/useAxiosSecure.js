@@ -21,7 +21,7 @@ const useAxiosSecure = () => {
       (config) => {
         const token = localStorage.getItem('access-token')
         if (token) {
-          config.headers.Authorization = `Bearer ${token}`
+          config.headers.Authorization = `Bearer ${token}` // ✅ FIXED
         } else {
           delete config.headers.Authorization
         }
