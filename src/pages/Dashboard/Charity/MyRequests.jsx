@@ -25,7 +25,6 @@ const MyRequests = () => {
 
   const cancelMutation = useMutation({
     mutationFn: async (id) => {
-      // FIXED: Correct DELETE endpoint path
       await axiosSecure.delete(`/api/donation-requests/${id}`)
     },
     onSuccess: () => {
@@ -52,18 +51,23 @@ const MyRequests = () => {
     </div>
   )
 
+  // Filter out requests with "Picked Up" status
+  const filteredRequests = requests.filter(request => 
+    request.status !== 'Picked Up'
+  )
+
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-3xl font-bold mb-8 text-center">My Donation Requests</h1>
       
-      {requests.length === 0 ? (
+      {filteredRequests.length === 0 ? (
         <div className="bg-base-200 rounded-lg p-8 text-center">
-          <h2 className="text-xl font-semibold">No requests found</h2>
-          <p className="mt-2">You haven't made any donation requests yet.</p>
+          <h2 className="text-xl font-semibold">No active requests found</h2>
+          <p className="mt-2">You don't have any active donation requests.</p>
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {requests.map((request) => (
+          {filteredRequests.map((request) => (
             <div key={request._id} className="card bg-base-100 shadow-xl">
               <div className="card-body">
                 <h2 className="card-title">{request.donationTitle}</h2>

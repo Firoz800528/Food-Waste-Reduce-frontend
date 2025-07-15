@@ -15,9 +15,8 @@ const MyPickups = () => {
         `${import.meta.env.VITE_BACKEND_URL}/api/charity/my-requests`,
         authHeader
       );
-      return data.filter(pick => 
-        pick.status === 'Accepted' || pick.status === 'Picked Up'
-      );
+      // Filter out Picked Up items
+      return data.filter(pick => pick.status === 'Accepted');
     }
   });
 
@@ -38,10 +37,15 @@ const MyPickups = () => {
 
   return (
     <div className="p-6">
-      <h2 className="text-2xl font-bold mb-4">My Pickups</h2>
+      <h2 className="text-2xl font-bold mb-4">My Scheduled Pickups</h2>
 
       {pickups.length === 0 ? (
-        <p>No assigned pickups found.</p>
+        <div className="text-center py-8">
+          <p className="text-lg">No scheduled pickups found</p>
+          <p className="text-gray-500 mt-2">
+            You don't have any upcoming pickups scheduled
+          </p>
+        </div>
       ) : (
         pickups.map(pick => (
           <div key={pick._id} className="border p-4 mb-4 rounded-lg shadow bg-base-100">
@@ -56,21 +60,17 @@ const MyPickups = () => {
 
             <p className="mt-2">
               <strong>Status:</strong>{" "}
-              <span className={`badge ${
-                pick.status === 'Picked Up' ? 'badge-success' : 'badge-warning'
-              }`}>
-                {pick.status === 'Accepted' ? 'Assigned' : 'Picked Up'}
+              <span className="badge badge-warning">
+                Scheduled
               </span>
             </p>
 
-            {pick.status === 'Accepted' && (
-              <button
-                className="btn btn-success btn-sm mt-3"
-                onClick={() => confirmPickup(pick._id)}
-              >
-                Confirm Pickup
-              </button>
-            )}
+            <button
+              className="btn btn-success btn-sm mt-3"
+              onClick={() => confirmPickup(pick._id)}
+            >
+              Confirm Pickup
+            </button>
           </div>
         ))
       )}
