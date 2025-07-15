@@ -1,8 +1,9 @@
+// src/hooks/useAxiosSecure.js
 import axios from 'axios'
 import { useEffect, useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'
+const BASE_URL = import.meta.env.VITE_BACKEND_URL || 'https://food-waste-backend.vercel.app'
 
 const useAxiosSecure = () => {
   const navigate = useNavigate()
@@ -15,6 +16,7 @@ const useAxiosSecure = () => {
   }
 
   useEffect(() => {
+    // Add request interceptor to add token header
     const requestInterceptor = axiosInstanceRef.current.interceptors.request.use(
       (config) => {
         const token = localStorage.getItem('access-token')
@@ -28,6 +30,7 @@ const useAxiosSecure = () => {
       (error) => Promise.reject(error)
     )
 
+    // Add response interceptor to handle 401 Unauthorized globally
     const responseInterceptor = axiosInstanceRef.current.interceptors.response.use(
       (response) => response,
       (error) => {
