@@ -23,7 +23,7 @@ const Login = () => {
       localStorage.setItem('access-token', token)
 
       toast.success('Login successful!')
-      navigate('/')
+      window.location.href = '/'
     } catch {
       toast.error('Invalid email or password')
     }
@@ -57,7 +57,7 @@ const Login = () => {
       localStorage.setItem('access-token', token)
 
       toast.success('Logged in with Google!')
-      navigate('/')
+      window.location.href = '/'
     } catch {
       toast.error('Google login failed')
     }

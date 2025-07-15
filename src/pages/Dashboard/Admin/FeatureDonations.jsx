@@ -86,7 +86,7 @@ const FeatureDonations = () => {
                   <td className="border border-gray-300 dark:border-gray-700 px-3 py-2 text-center whitespace-nowrap">
                     <button
                       onClick={() => handleFeature(donation._id)}
-                      className="px-3 py-1 bg-[#F1AA5F] hover:bg-[#d59430] text-white rounded-md text-sm font-semibold transition"
+                      className="px-3 py-1 bg-[#F1AA5F] cursor-pointer hover:bg-[#d59430] text-white rounded-md text-sm font-semibold transition"
                       aria-label={`Feature donation ${donation.title}`}
                     >
                       Feature

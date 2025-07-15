@@ -30,7 +30,7 @@ const Register = () => {
       localStorage.setItem('access-token', token)
 
       toast.success('Account created successfully!')
-      navigate('/')
+      window.location.href = '/'
     } catch {
       toast.error('Registration failed')
     }
@@ -68,7 +68,7 @@ const Register = () => {
       localStorage.setItem('access-token', token)
 
       toast.success('Account created with Google!')
-      navigate('/')
+      window.location.href = '/'
     } catch {
       toast.error('Google sign up failed')
     }

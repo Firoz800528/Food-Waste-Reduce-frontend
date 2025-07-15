@@ -7,8 +7,8 @@ const Contact = () => {
     <div>
       <Navbar />
       <div className="max-w-4xl mx-auto px-6 py-10">
-        <h1 className="text-3xl font-bold mb-4 text-primary">Contact Us</h1>
-        <p className="text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+        <h1 className="text-3xl font-bold text-[#D19950] mb-4">Contact Us</h1>
+        <p className="text-[#] dark:text-gray-300 leading-relaxed mb-4">
           Have questions or want to get involved? Reach out to us!
         </p>
         <ul className="text-gray-700 dark:text-gray-300 space-y-2">

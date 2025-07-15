@@ -1,23 +1,37 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { toast } from "react-toastify";
+import { useAuth } from "../../../hooks/useAuth";
 
 const MyPickups = () => {
+  const { user } = useAuth();
+  const token = localStorage.getItem('access-token');
+  const authHeader = { headers: { Authorization: `Bearer ${token}` } };
+
   const { data: pickups = [], refetch } = useQuery({
     queryKey: ['myPickups'],
     queryFn: async () => {
-      const { data } = await axios.get('/api/charity/my-requests');
-      return data.filter(pick => pick.status === 'Accepted');
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_BACKEND_URL}/api/charity/my-requests`,
+        authHeader
+      );
+      return data.filter(pick => 
+        pick.status === 'Accepted' || pick.status === 'Picked Up'
+      );
     }
   });
 
   const confirmPickup = async (id) => {
     try {
-      await axios.patch(`/api/donation-requests/${id}/confirm`);
-      toast.success('Pickup confirmed');
+      await axios.patch(
+        `${import.meta.env.VITE_BACKEND_URL}/api/charity/pickups/${id}/confirm`,
+        {},
+        authHeader
+      );
+      toast.success('✅ Pickup confirmed');
       refetch();
     } catch (error) {
-      toast.error('Failed to confirm pickup');
+      toast.error('❌ Failed to confirm pickup');
       console.error('Pickup error:', error);
     }
   };
@@ -30,20 +44,33 @@ const MyPickups = () => {
         <p>No assigned pickups found.</p>
       ) : (
         pickups.map(pick => (
-          <div key={pick._id} className="border p-4 mb-4 rounded-lg shadow">
-            <h3 className="text-lg font-semibold">{pick.donationTitle || 'Untitled Donation'}</h3>
-            <p><strong>Restaurant:</strong> {pick.restaurantName}</p>
-            <p><strong>Location:</strong> {pick.restaurantLocation}</p>
-            <p><strong>Food Type:</strong> {pick.foodType || 'N/A'}</p>
-            <p><strong>Quantity:</strong> {pick.quantity || 'N/A'}</p>
-            <p><strong>Pickup Time:</strong> {pick.pickupTime || 'N/A'}</p>
-            <p><strong>Status:</strong> {pick.status}</p>
-            <button
-              className="btn btn-success btn-sm mt-2"
-              onClick={() => confirmPickup(pick._id)}
-            >
-              Confirm Pickup
-            </button>
+          <div key={pick._id} className="border p-4 mb-4 rounded-lg shadow bg-base-100">
+            <h3 className="text-lg font-semibold mb-1">
+              {pick.donation?.title || pick.donationTitle || 'Untitled Donation'}
+            </h3>
+            <p><strong>Restaurant:</strong> {pick.donation?.restaurantName || pick.restaurantName}</p>
+            <p><strong>Location:</strong> {pick.donation?.restaurantLocation || pick.restaurantLocation}</p>
+            <p><strong>Food Type:</strong> {pick.donation?.foodType || pick.foodType || 'N/A'}</p>
+            <p><strong>Quantity:</strong> {pick.donation?.quantity || pick.quantity || 'N/A'}</p>
+            <p><strong>Pickup Time:</strong> {new Date(pick.requestDetails?.pickupTime).toLocaleString() || 'N/A'}</p>
+
+            <p className="mt-2">
+              <strong>Status:</strong>{" "}
+              <span className={`badge ${
+                pick.status === 'Picked Up' ? 'badge-success' : 'badge-warning'
+              }`}>
+                {pick.status === 'Accepted' ? 'Assigned' : 'Picked Up'}
+              </span>
+            </p>
+
+            {pick.status === 'Accepted' && (
+              <button
+                className="btn btn-success btn-sm mt-3"
+                onClick={() => confirmPickup(pick._id)}
+              >
+                Confirm Pickup
+              </button>
+            )}
           </div>
         ))
       )}

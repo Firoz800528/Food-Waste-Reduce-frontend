@@ -33,12 +33,18 @@ const DonationDetails = () => {
       .catch(() => toast.error('❌ Failed to load donation'))
   }, [id])
 
-  // Fetch user's request for this donation
+  // Fetch user's request for this donation - FIXED
   useEffect(() => {
     if (!id || !user || role !== 'charity' || !token) return
     
     axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/donation-requests/me?donationId=${id}`, authHeader)
-      .then(res => setUserRequest(res.data))
+      .then(res => {
+        if (res.data && res.data.length > 0) {
+          setUserRequest(res.data[0]) // Get first request from array
+        } else {
+          setUserRequest(null)
+        }
+      })
       .catch(() => setUserRequest(null))
   }, [id, user, role, token])
 
@@ -101,19 +107,23 @@ const DonationDetails = () => {
 
   const handleConfirmPickup = async () => {
     try {
-      if (!userRequest) return
+      if (!userRequest || !userRequest._id) {
+        return toast.error('❌ Request ID missing - cannot confirm pickup')
+      }
+      
       await axios.patch(
-        `${import.meta.env.VITE_BACKEND_URL}/api/donation-requests/${userRequest._id}/confirm`,
+        `${import.meta.env.VITE_BACKEND_URL}/api/charity/pickups/${userRequest._id}/confirm`,
         {},
         authHeader
       )
       
       toast.success('✅ Pickup confirmed')
       
-      // Update local state
-      setUserRequest({ ...userRequest, status: 'Completed' })
-      setDonation({ ...donation, status: 'Completed' })
-    } catch {
+      // Update local state to reflect new status
+      setUserRequest({ ...userRequest, status: 'Picked Up' })
+      setDonation({ ...donation, status: 'Picked Up' })
+    } catch (error) {
+      console.error('Confirm pickup error:', error)
       toast.error('❌ Failed to confirm pickup')
     }
   }
@@ -205,6 +215,7 @@ const DonationDetails = () => {
           </button>
         )}
 
+        {/* Only show Confirm Pickup if request is accepted AND not picked up */}
         {role === 'charity' && userRequest?.status === 'Accepted' && (
           <button 
             onClick={handleConfirmPickup} 
@@ -347,6 +358,7 @@ const DonationDetails = () => {
                               checked={review.rating === i + 1}
                               readOnly
                             />
+                            
                           ))}
                         </div>
                         <span className="ml-2 text-sm text-gray-500">
