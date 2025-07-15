@@ -1,21 +1,25 @@
 import { useQuery } from '@tanstack/react-query'
-import axios from 'axios'
 import {
   BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, CartesianGrid
 } from 'recharts'
+import useAxiosSecure from '../../../hooks/useAxiosSecure'
 
 const DonationStatistics = () => {
-  const { data = [], isLoading } = useQuery({
+  const axiosSecure = useAxiosSecure()
+
+  const { data = [], isLoading, error } = useQuery({
     queryKey: ['myDonationsStats'],
     queryFn: async () => {
-      const token = localStorage.getItem('access-token')
-      const res = await axios.get(`${import.meta.env.VITE_BACKEND_URL}/api/donations/my`, {
-        headers: { Authorization: `Bearer ${token}` }
-      })
+      const res = await axiosSecure.get('/api/donations/my') // relative path, baseURL set in axios instance
       return res.data
     }
   })
 
+  if (error) {
+    return <p className="text-center text-red-500">Error loading donations: {error.message}</p>
+  }
+
+  // Aggregate quantity by foodType
   const chartData = Object.values(
     data.reduce((acc, item) => {
       if (!acc[item.foodType]) {
