@@ -8,7 +8,14 @@ const DashboardWrapper = () => {
   const { user, loading: authLoading } = useAuth()
   const [role, roleLoading] = useRole()
 
-  if (authLoading || roleLoading) return <Loader />
+  if (authLoading || roleLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen bg-gray-50 dark:bg-gray-900">
+        <Loader />
+      </div>
+    )
+  }
+
   if (!user) return <Navigate to="/login" replace />
 
   switch (role) {

@@ -12,7 +12,7 @@ const FeatureDonations = () => {
     queryFn: async () => {
       const res = await axiosSecure.get('/api/donations/verified')
       return res.data
-    }
+    },
   })
 
   const handleFeature = async (donationId) => {
@@ -25,53 +25,79 @@ const FeatureDonations = () => {
     }
   }
 
-  if (isLoading) return <p>Loading...</p>
+  if (isLoading)
+    return (
+      <p className="text-center py-8 text-gray-500 dark:text-gray-400">Loading...</p>
+    )
 
-  // Show only non-featured donations in admin feature page
   const nonFeaturedDonations = donations.filter(donation => !donation.featured)
 
   return (
-    <div>
-      <h2 className="text-xl font-bold mb-4">Feature Donations</h2>
-      <table className="table-auto w-full border-collapse border border-gray-300">
-        <thead>
-          <tr>
-            <th className="border border-gray-300 px-2 py-1">#</th>
-            <th className="border border-gray-300 px-2 py-1">Image</th>
-            <th className="border border-gray-300 px-2 py-1">Title</th>
-            <th className="border border-gray-300 px-2 py-1">Food Type</th>
-            <th className="border border-gray-300 px-2 py-1">Restaurant</th>
-            <th className="border border-gray-300 px-2 py-1">Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {nonFeaturedDonations.length === 0 ? (
+    <div className="max-w-full bg-white dark:bg-gray-800 rounded-lg shadow-md p-6">
+      <h2 className="text-2xl font-bold mb-6 text-indigo-700">Feature Donations</h2>
+
+      <div className="overflow-x-auto">
+        <table className="min-w-full table-auto border-collapse border border-gray-300 dark:border-gray-700">
+          <thead className="bg-gray-50 dark:bg-gray-700">
             <tr>
-              <td colSpan={6} className="text-center py-4">No donations to feature.</td>
+              {['#', 'Image', 'Title', 'Food Type', 'Restaurant', 'Action'].map((header) => (
+                <th
+                  key={header}
+                  className="border border-gray-300 dark:border-gray-600 px-3 py-2 text-left text-sm font-semibold text-gray-600 dark:text-gray-300 uppercase whitespace-nowrap"
+                >
+                  {header}
+                </th>
+              ))}
             </tr>
-          ) : (
-            nonFeaturedDonations.map((donation, index) => (
-              <tr key={donation._id}>
-                <td className="border border-gray-300 px-2 py-1">{index + 1}</td>
-                <td className="border border-gray-300 px-2 py-1">
-                  <img src={donation.image} alt={donation.title} className="w-16 h-16 object-cover" />
-                </td>
-                <td className="border border-gray-300 px-2 py-1">{donation.title}</td>
-                <td className="border border-gray-300 px-2 py-1">{donation.foodType}</td>
-                <td className="border border-gray-300 px-2 py-1">{donation.restaurantName}</td>
-                <td className="border border-gray-300 px-2 py-1">
-                  <button
-                    className="btn btn-primary btn-sm"
-                    onClick={() => handleFeature(donation._id)}
-                  >
-                    Feature
-                  </button>
+          </thead>
+
+          <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
+            {nonFeaturedDonations.length === 0 ? (
+              <tr>
+                <td colSpan={6} className="text-center py-6 text-gray-500 dark:text-gray-400">
+                  No donations to feature.
                 </td>
               </tr>
-            ))
-          )}
-        </tbody>
-      </table>
+            ) : (
+              nonFeaturedDonations.map((donation, index) => (
+                <tr
+                  key={donation._id}
+                  className="text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-700 transition"
+                >
+                  <td className="border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm text-center whitespace-nowrap">
+                    {index + 1}
+                  </td>
+                  <td className="border border-gray-300 dark:border-gray-700 px-3 py-2 text-center whitespace-nowrap">
+                    <img
+                      src={donation.image}
+                      alt={donation.title}
+                      className="w-16 h-16 object-cover rounded-md mx-auto"
+                    />
+                  </td>
+                  <td className="border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm truncate max-w-xs">
+                    {donation.title}
+                  </td>
+                  <td className="border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm capitalize whitespace-nowrap">
+                    {donation.foodType}
+                  </td>
+                  <td className="border border-gray-300 dark:border-gray-700 px-3 py-2 text-sm truncate max-w-xs">
+                    {donation.restaurantName}
+                  </td>
+                  <td className="border border-gray-300 dark:border-gray-700 px-3 py-2 text-center whitespace-nowrap">
+                    <button
+                      onClick={() => handleFeature(donation._id)}
+                      className="px-3 py-1 bg-[#F1AA5F] hover:bg-[#d59430] text-white rounded-md text-sm font-semibold transition"
+                      aria-label={`Feature donation ${donation.title}`}
+                    >
+                      Feature
+                    </button>
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
     </div>
   )
 }

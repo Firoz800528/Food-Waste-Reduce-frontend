@@ -190,7 +190,7 @@ const DonationDetails = () => {
       <div className="mt-6 flex flex-wrap gap-4">
         <button 
           onClick={handleSaveFavorite} 
-          className="btn btn-primary" 
+          className="btn bg-[#D19950] hover:bg-amber-600" 
           disabled={!user}
         >
           Save to Favorites
