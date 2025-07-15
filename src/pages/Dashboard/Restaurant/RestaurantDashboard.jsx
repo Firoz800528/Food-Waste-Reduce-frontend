@@ -9,6 +9,8 @@ const navItems = [
   { id: 'donation-statistics', label: 'Donation Statistics', to: 'donation-statistics' }, 
 ]
 
+const highlightColor = '#D19950' // your gold-ish color
+
 const RestaurantDashboard = () => {
   const [drawerOpen, setDrawerOpen] = useState(false)
   const location = useLocation()
@@ -18,16 +20,21 @@ const RestaurantDashboard = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      <aside className={`
-        fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg transform transition-transform duration-300 ease-in-out
-        ${drawerOpen ? 'translate-x-0' : '-translate-x-full'}
-        md:translate-x-0 md:static md:shadow-none
-        flex flex-col
-      `}>
+      <aside
+        className={`
+          fixed inset-y-0 left-0 z-40 w-64 bg-white shadow-lg hover transform transition-transform duration-300 ease-in-out
+          ${drawerOpen ? 'translate-x-0' : '-translate-x-full'}
+          md:translate-x-0 md:static md:shadow-none
+          flex flex-col
+        `}
+        style={{ borderRight: `4px solid ${highlightColor}` }}
+      >
         <div className="flex items-center justify-between p-6 border-b border-gray-200">
-          <h2 className="text-xl font-bold text-indigo-700">Restaurant Dashboard</h2>
+          <h2 className="text-xl font-bold" style={{ color: highlightColor }}>
+            Restaurant Dashboard
+          </h2>
           <button
-            className="md:hidden text-gray-600 hover:text-indigo-600"
+            className="md:hidden text-gray-600 hover:text-opacity-80"
             onClick={() => setDrawerOpen(false)}
             aria-label="Close menu"
           >
@@ -44,10 +51,14 @@ const RestaurantDashboard = () => {
                   className={({ isActive }) =>
                     `block w-full px-4 py-3 rounded-md font-semibold transition-colors duration-200 ${
                       isActive
-                        ? 'bg-indigo-600 text-white shadow-md'
-                        : 'text-gray-700 hover:bg-indigo-100 hover:text-indigo-700'
+                        ? `bg-[${highlightColor}] text-white shadow-md`
+                        : `text-gray-700 hover:bg-[#d1995091]`
                     }`
                   }
+                  style={({ isActive }) => ({
+                    backgroundColor: isActive ? highlightColor : undefined,
+                    color: isActive ? '#fff' : undefined,
+                  })}
                   onClick={() => setDrawerOpen(false)}
                 >
                   {label}
@@ -65,6 +76,7 @@ const RestaurantDashboard = () => {
         <div
           className="fixed inset-0 bg-black bg-opacity-30 z-30 md:hidden"
           onClick={() => setDrawerOpen(false)}
+          aria-hidden="true"
         />
       )}
 
@@ -73,19 +85,17 @@ const RestaurantDashboard = () => {
           <button
             onClick={() => setDrawerOpen(true)}
             aria-label="Open menu"
-            className="text-indigo-700"
+            className="text-[color:var(--highlight)]"
+            style={{ color: highlightColor }}
           >
             &#9776;
           </button>
-          <h1 className="text-lg font-bold text-gray-800 truncate">Restaurant Dashboard</h1>
-          <div />
+          <div /> {/* Empty div to keep layout */}
         </header>
 
         <main className="flex-1 px-4 py-4 bg-transparent">
           <section aria-labelledby="page-heading" className="space-y-6">
-            <h2 id="page-heading" className="text-2xl font-semibold text-gray-800 truncate">
-              {activeItem.label}
-            </h2>
+            {/* Removed the page heading as per your request */}
             <Outlet />
           </section>
         </main>
