@@ -25,7 +25,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 mt-20 border-t border-gray-300 dark:border-gray-700">
-      <div className="max-w-7xl mx-auto px-6 py-12 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-12">
+      <div className="max-w-7xl mx-auto px-6 py-12 flex flex-col sm:flex-row justify-between items-start space-y-6 sm:space-y-0 sm:space-x-10">
         
         {/* Branding */}
         <div className="space-y-4">
@@ -36,7 +36,7 @@ const Footer = () => {
             <span role="img" aria-label="Plate and cutlery">🍽️</span> Food Waste Reduction
           </h2>
           <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-400">
-            Saving food, reducing waste, and helping communities thrive through technology and compassion.
+            Saving food, reducing waste, and helping communities <br />thrive through technology and compassion.
           </p>
         </div>
 
@@ -123,7 +123,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <div className="border-t border-gray-200 dark:border-gray-700 mt-10 pt-6 text-center text-sm text-gray-500 dark:text-gray-400">
+      <div className="border-t border-gray-200 dark:border-gray-700 text-center text-sm text-gray-500 dark:text-gray-400">
         &copy; {new Date().getFullYear()} Food Waste Platform. All rights reserved.
       </div>
     </footer>
