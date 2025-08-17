@@ -27,6 +27,7 @@ const Navbar = () => {
     setIsOpen(false)
   }
 
+  // active link text color => black
   const navLinkClass = ({ isActive }) =>
     `px-3 py-2 rounded-md font-medium transition-colors duration-200 ${
       isActive ? 'text-black' : textGray
@@ -60,21 +61,17 @@ const Navbar = () => {
               </NavLink>
             </li>
 
-            {/* public nav items */}
-            {!user && (
-              <>
-                <li>
-                  <NavLink to="/about" onClick={handleLinkClick} className={navLinkClass}>
-                    About
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/contact" onClick={handleLinkClick} className={navLinkClass}>
-                    Contact
-                  </NavLink>
-                </li>
-              </>
-            )}
+            {/* always visible */}
+            <li>
+              <NavLink to="/about" onClick={handleLinkClick} className={navLinkClass}>
+                About
+              </NavLink>
+            </li>
+            <li>
+              <NavLink to="/contact" onClick={handleLinkClick} className={navLinkClass}>
+                Contact
+              </NavLink>
+            </li>
 
             {/* protected nav items */}
             {user && (
@@ -162,20 +159,17 @@ const Navbar = () => {
             </NavLink>
           </li>
 
-          {!user && (
-            <>
-              <li>
-                <NavLink to="/about" onClick={handleLinkClick} className={navLinkClass}>
-                  About
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/contact" onClick={handleLinkClick} className={navLinkClass}>
-                  Contact
-                </NavLink>
-              </li>
-            </>
-          )}
+          {/* always visible */}
+          <li>
+            <NavLink to="/about" onClick={handleLinkClick} className={navLinkClass}>
+              About
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/contact" onClick={handleLinkClick} className={navLinkClass}>
+              Contact
+            </NavLink>
+          </li>
 
           {user && (
             <>
