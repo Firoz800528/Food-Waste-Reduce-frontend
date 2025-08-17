@@ -59,7 +59,7 @@ const Footer = () => {
           <div className="flex items-center gap-5">
             {/* Facebook */}
             <a
-              href="https://facebook.com"
+              href="https://web.facebook.com/phi.ro.ja.694863"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-[#F1AA5F] transition-colors"
@@ -70,9 +70,9 @@ const Footer = () => {
                 <path d="M22.675 0h-21.35A1.326 1.326 0 000 1.326v21.348A1.326 1.326 0 001.326 24H12.82v-9.294H9.69v-3.622h3.13V8.413c0-3.1 1.894-4.788 4.659-4.788 1.325 0 2.464.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.764v2.312h3.587l-.467 3.622h-3.12V24h6.116A1.326 1.326 0 0024 22.674V1.326A1.326 1.326 0 0022.675 0z" />
               </svg>
             </a>
-            {/* Twitter */}
+            {/* X */}
             <a
-              href="https://twitter.com"
+              href="https://x.com/FZaman800528"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-[#F1AA5F] transition-colors"
@@ -85,7 +85,7 @@ const Footer = () => {
             </a>
             {/* LinkedIn */}
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/md-firozzaman/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-[#F1AA5F] transition-colors"
