@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom'
 import useAxiosSecure from '../../hooks/useAxiosSecure'
 import { useEffect, useState, useRef } from 'react'
 
+ 
+
+
 const Banner = () => {
   const slides = [
     {
@@ -41,6 +44,8 @@ const Banner = () => {
   }
 
   return (
+    
+ 
     <div className="relative w-full h-64 md:h-96 rounded-lg overflow-hidden shadow-lg">
       {slides.map((slide, index) => (
         <div
@@ -81,6 +86,17 @@ const Banner = () => {
 }
 
 const Home = () => {
+  const [email, setEmail] = useState('')
+const [success, setSuccess] = useState(false)
+
+const handleSubscribe = () => {
+  if (!email) return
+  // Simulate API call for subscription
+  setTimeout(() => {
+    setSuccess(true)
+    setEmail('')
+  }, 500)
+}
   const axiosSecure = useAxiosSecure()
   const [isAdmin, setIsAdmin] = useState(false)
 
@@ -312,15 +328,31 @@ const Home = () => {
       </div>
 
       {/* Newsletter / Subscribe */}
-      <h2 className="text-3xl font-bold mt-16 mb-6 text-center" style={{ color: '#F1AA5F' }}>Join Our Newsletter</h2>
-      <div className="flex flex-col items-center">
-        <input type="email" placeholder="Enter your email" className="input input-bordered w-full max-w-md mb-4 dark:bg-gray-800 dark:text-white" />
-        <button className="btn text-white" style={{ backgroundColor: '#F1AA5F' }}
-          onMouseEnter={e => (e.currentTarget.style.filter = 'brightness(0.9)')}
-          onMouseLeave={e => (e.currentTarget.style.filter = 'brightness(1)')}>
-          Subscribe
-        </button>
-      </div>
+<h2 className="text-3xl font-bold mt-16 mb-6 text-center" style={{ color: '#F1AA5F' }}>Join Our Newsletter</h2>
+<div className="flex flex-col items-center">
+  <input
+    type="email"
+    placeholder="Enter your email"
+    value={email}
+    onChange={e => setEmail(e.target.value)}
+    className="input input-bordered w-full max-w-md mb-4 dark:bg-gray-800 dark:text-white"
+  />
+  <button
+    className="btn text-white"
+    style={{ backgroundColor: '#F1AA5F' }}
+    onClick={handleSubscribe}
+    onMouseEnter={e => (e.currentTarget.style.filter = 'brightness(0.9)')}
+    onMouseLeave={e => (e.currentTarget.style.filter = 'brightness(1)')}
+  >
+    Subscribe
+  </button>
+  {success && (
+    <p className="mt-4 text-green-600 font-semibold">
+      🎉 Subscription successful! Thank you for joining.
+    </p>
+  )}
+</div>
+
     </div>
   )
 }
