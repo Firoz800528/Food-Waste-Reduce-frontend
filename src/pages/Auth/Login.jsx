@@ -12,7 +12,7 @@ const Login = () => {
     try {
       await login(data.email, data.password)
 
-      const res = await fetch('http://localhost:5000/api/login', {
+      const res = await fetch('https://food-waste-backend.vercel.app/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: data.email }),
@@ -34,7 +34,7 @@ const Login = () => {
       const result = await loginWithGoogle()
       const user = result.user
 
-      const registerRes = await fetch('http://localhost:5000/api/register', {
+      const registerRes = await fetch('https://food-waste-backend.vercel.app/api/register', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -45,7 +45,7 @@ const Login = () => {
         }),
       })
 
-      const loginRes = await fetch('http://localhost:5000/api/login', {
+      const loginRes = await fetch('https://food-waste-backend.vercel.app/api/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email: user.email }),

@@ -19,13 +19,13 @@ const SocialLogin = () => {
         }
 
         const response = await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/register`,
+          `${import.meta.env.VITE_BACKEND_URL || 'https://food-waste-backend.vercel.app'}/api/register`,
           saveUser
         )
         localStorage.setItem('access-token', response.data.token)
 
         const userRes = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL || 'http://localhost:5000'}/api/users/me`,
+          `${import.meta.env.VITE_BACKEND_URL || 'https://food-waste-backend.vercel.app'}/api/users/me`,
           {
             headers: {
               Authorization: `Bearer ${response.data.token}`,

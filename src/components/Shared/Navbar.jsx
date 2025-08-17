@@ -5,7 +5,7 @@ import { useState } from 'react'
 import { FaBars } from 'react-icons/fa'
 
 const primaryColor = '#F1AA5F'
-const primaryHoverColor = '#d19950' // Slightly darker for hover
+const primaryHoverColor = '#d19950'
 const textGray = 'text-gray-700'
 
 const Navbar = () => {
@@ -29,16 +29,13 @@ const Navbar = () => {
 
   const navLinkClass = ({ isActive }) =>
     `px-3 py-2 rounded-md font-medium transition-colors duration-200 ${
-      isActive
-        ? 'text-white'
-        : textGray
+      isActive ? 'text-black' : textGray
     }`
 
   return (
     <nav className="bg-white shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-5 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
-          {/* Logo */}
           <Link
             to="/"
             className="flex items-center gap-2 select-none"
@@ -58,49 +55,37 @@ const Navbar = () => {
           {/* Desktop nav */}
           <ul className="hidden lg:flex items-center gap-4">
             <li>
-              <NavLink
-                to="/"
-                onClick={handleLinkClick}
-                className={({ isActive }) =>
-                  `px-3 py-2 rounded-md font-medium transition-colors duration-200 ${
-                    isActive
-                      ? 'bg-[#F1AA5F] text-white'
-                      : 'text-gray-700 hover:bg-[#F1AA5F] hover:text-white'
-                  }`
-                }
-              >
+              <NavLink to="/" onClick={handleLinkClick} className={navLinkClass}>
                 Home
               </NavLink>
             </li>
+
+            {/* public nav items */}
+            {!user && (
+              <>
+                <li>
+                  <NavLink to="/about" onClick={handleLinkClick} className={navLinkClass}>
+                    About
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/contact" onClick={handleLinkClick} className={navLinkClass}>
+                    Contact
+                  </NavLink>
+                </li>
+              </>
+            )}
+
+            {/* protected nav items */}
             {user && (
               <>
                 <li>
-                  <NavLink
-                    to="/alldonations"
-                    onClick={handleLinkClick}
-                    className={({ isActive }) =>
-                      `px-3 py-2 rounded-md font-medium transition-colors duration-200 ${
-                        isActive
-                          ? 'bg-[#F1AA5F] text-white'
-                          : 'text-gray-700 hover:bg-[#F1AA5F] hover:text-white'
-                      }`
-                    }
-                  >
+                  <NavLink to="/alldonations" onClick={handleLinkClick} className={navLinkClass}>
                     All Donations
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink
-                    to={dashboardPath}
-                    onClick={handleLinkClick}
-                    className={({ isActive }) =>
-                      `px-3 py-2 rounded-md font-medium transition-colors duration-200 ${
-                        isActive
-                          ? 'bg-[#F1AA5F] text-white'
-                          : 'text-gray-700 hover:bg-[#F1AA5F] hover:text-white'
-                      }`
-                    }
-                  >
+                  <NavLink to={dashboardPath} onClick={handleLinkClick} className={navLinkClass}>
                     Dashboard
                   </NavLink>
                 </li>
@@ -108,7 +93,6 @@ const Navbar = () => {
             )}
           </ul>
 
-          {/* Right side */}
           <div className="flex items-center gap-3">
             {user ? (
               <>
@@ -130,9 +114,7 @@ const Navbar = () => {
                   onClick={logout}
                   aria-label="Logout"
                   className="btn btn-sm border-none text-white transition-colors duration-200"
-                  style={{
-                    backgroundColor: '#F1AA5F',
-                  }}
+                  style={{ backgroundColor: primaryColor }}
                   onMouseEnter={e => (e.currentTarget.style.backgroundColor = primaryHoverColor)}
                   onMouseLeave={e => (e.currentTarget.style.backgroundColor = primaryColor)}
                 >
@@ -144,9 +126,7 @@ const Navbar = () => {
                 to="/login"
                 aria-label="Login"
                 className="btn btn-sm border-none text-white transition-colors duration-200"
-                style={{
-                  backgroundColor: primaryColor,
-                }}
+                style={{ backgroundColor: primaryColor }}
                 onMouseEnter={e => (e.currentTarget.style.backgroundColor = primaryHoverColor)}
                 onMouseLeave={e => (e.currentTarget.style.backgroundColor = primaryColor)}
               >
@@ -154,7 +134,6 @@ const Navbar = () => {
               </Link>
             )}
 
-            {/* Hamburger */}
             <button
               className="lg:hidden p-2 rounded-md hover:bg-gray-100 focus:outline-none focus:ring-2"
               onClick={() => setIsOpen(!isOpen)}
@@ -178,49 +157,35 @@ const Navbar = () => {
       >
         <ul className="flex flex-col px-5 py-4 gap-1">
           <li>
-            <NavLink
-              to="/"
-              onClick={handleLinkClick}
-              className={({ isActive }) =>
-                `px-3 py-2 rounded-md font-medium transition-colors duration-200 ${
-                  isActive
-                    ? 'bg-[#F1AA5F] text-white'
-                    : 'text-gray-700 hover:bg-[#F1AA5F] hover:text-white'
-                }`
-              }
-            >
+            <NavLink to="/" onClick={handleLinkClick} className={navLinkClass}>
               Home
             </NavLink>
           </li>
+
+          {!user && (
+            <>
+              <li>
+                <NavLink to="/about" onClick={handleLinkClick} className={navLinkClass}>
+                  About
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/contact" onClick={handleLinkClick} className={navLinkClass}>
+                  Contact
+                </NavLink>
+              </li>
+            </>
+          )}
+
           {user && (
             <>
               <li>
-                <NavLink
-                  to="/alldonations"
-                  onClick={handleLinkClick}
-                  className={({ isActive }) =>
-                    `px-3 py-2 rounded-md font-medium transition-colors duration-200 ${
-                      isActive
-                        ? 'bg-[#F1AA5F] text-white'
-                        : 'text-gray-700 hover:bg-[#F1AA5F] hover:text-white'
-                    }`
-                  }
-                >
+                <NavLink to="/alldonations" onClick={handleLinkClick} className={navLinkClass}>
                   All Donations
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  to={dashboardPath}
-                  onClick={handleLinkClick}
-                  className={({ isActive }) =>
-                    `px-3 py-2 rounded-md font-medium transition-colors duration-200 ${
-                      isActive
-                        ? 'bg-[#F1AA5F] text-white'
-                        : 'text-gray-700 hover:bg-[#F1AA5F] hover:text-white'
-                    }`
-                  }
-                >
+                <NavLink to={dashboardPath} onClick={handleLinkClick} className={navLinkClass}>
                   Dashboard
                 </NavLink>
               </li>
