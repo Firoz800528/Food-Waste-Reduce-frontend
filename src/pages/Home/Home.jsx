@@ -64,7 +64,6 @@ const Banner = () => {
         </div>
       ))}
 
-      {/* Dots */}
       <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2 flex space-x-3">
         {slides.map((_, idx) => (
           <button
@@ -109,7 +108,6 @@ const Home = () => {
     return res.data
   }
 })
-
 
   const featuredDonations = donations.filter(donation => donation.featured)
 
@@ -252,35 +250,76 @@ const Home = () => {
           {
             id: 1,
             title: 'Hope Charity feeds 1,000+ people',
-            content:
-              'Thanks to local restaurants and the Food Waste Platform, Hope Charity was able to organize a food drive that helped over 1,000 individuals in need.',
+            content:'Thanks to local restaurants and the Food Waste Platform, Hope Charity was able to organize a food drive that helped over 1,000 individuals in need.',
           },
           {
             id: 2,
             title: 'Green Leaf Diner reduces waste by 80%',
-            content:
-              'With regular donations through the platform, Green Leaf Diner minimized their food waste drastically while supporting shelters.',
+            content:'With regular donations through the platform, Green Leaf Diner minimized their food waste drastically while supporting shelters.',
           },
           {
             id: 3,
             title: 'Local Unity Kitchen joins the mission',
-            content:
-              'Unity Kitchen recently signed up and has already donated over 300 kg of food to charities across the city.',
+            content:'Unity Kitchen recently signed up and has already donated over 300 kg of food to charities across the city.',
           },
         ].map((story) => (
-          <div
-            key={story.id}
-            className="card bg-white dark:bg-gray-800 shadow-md rounded-lg p-5 border"
-            style={{ borderColor: '#F1AA5F' }}
-          >
-            <div className="card-body p-0">
-              <h3 className="text-xl font-bold text-gray-900 dark:text-white" style={{ color: '#F1AA5F' }}>
-                {story.title}
-              </h3>
-              <p className="mt-3 text-gray-700 dark:text-gray-300">{story.content}</p>
-            </div>
+          <div key={story.id} className="card bg-white dark:bg-gray-800 shadow-md rounded-lg p-5 border" style={{ borderColor: '#F1AA5F' }}>
+            <h3 className="text-xl font-bold text-gray-900 dark:text-white" style={{ color: '#F1AA5F' }}>{story.title}</h3>
+            <p className="mt-3 text-gray-700 dark:text-gray-300">{story.content}</p>
           </div>
         ))}
+      </div>
+
+      {/* How It Works */}
+      <h2 className="text-3xl font-bold mt-16 mb-6" style={{ color: '#F1AA5F' }}>How It Works</h2>
+      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-3">
+        {[
+          { title: 'Restaurants', text: 'Local restaurants add their surplus food through our platform.' },
+          { title: 'Verification', text: 'Our team verifies safety and availability of the donated food.' },
+          { title: 'Donation', text: 'Charities receive the donations and distribute them to those in need.' }
+        ].map((item,idx) => (
+          <div key={idx} className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md border" style={{ borderColor: '#F1AA5F' }}>
+            <h4 className="text-lg font-semibold mb-2" style={{ color: '#F1AA5F' }}>{item.title}</h4>
+            <p className="text-gray-700 dark:text-gray-300">{item.text}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Partner Restaurants */}
+      <h2 className="text-3xl font-bold mt-16 mb-6" style={{ color: '#F1AA5F' }}>Partner Restaurants</h2>
+      <div className="grid gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+        {['Green Leaf Diner','Spice Hub','Urban Eatery','Bistro Plus'].map((name,idx)=>(
+          <div key={idx} className="p-5 rounded-lg bg-white dark:bg-gray-800 shadow-md border text-center" style={{ borderColor: '#F1AA5F' }}>
+            <h4 className="font-semibold mb-1" style={{ color: '#F1AA5F' }}>{name}</h4>
+            <p className="text-sm text-gray-700 dark:text-gray-300">Proud partner since 2024</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Why Choose Us */}
+      <h2 className="text-3xl font-bold mt-16 mb-6" style={{ color: '#F1AA5F' }}>Why Choose Us</h2>
+      <div className="grid gap-6 sm:grid-cols-1 md:grid-cols-3">
+        {[
+          { title: 'Trusted Platform', text: 'Verified partners and quality-controlled donations.' },
+          { title: 'Real Impact', text: 'Thousands of meals saved and delivered every month.' },
+          { title: 'Community Driven', text: 'Built with the help of community volunteers and partners.' }
+        ].map((item,idx)=>(
+          <div key={idx} className="p-6 bg-white dark:bg-gray-800 rounded-lg shadow-md border" style={{ borderColor: '#F1AA5F' }}>
+            <h4 className="text-lg font-semibold mb-2" style={{ color: '#F1AA5F' }}>{item.title}</h4>
+            <p className="text-gray-700 dark:text-gray-300">{item.text}</p>
+          </div>
+        ))}
+      </div>
+
+      {/* Newsletter / Subscribe */}
+      <h2 className="text-3xl font-bold mt-16 mb-6 text-center" style={{ color: '#F1AA5F' }}>Join Our Newsletter</h2>
+      <div className="flex flex-col items-center">
+        <input type="email" placeholder="Enter your email" className="input input-bordered w-full max-w-md mb-4 dark:bg-gray-800 dark:text-white" />
+        <button className="btn text-white" style={{ backgroundColor: '#F1AA5F' }}
+          onMouseEnter={e => (e.currentTarget.style.filter = 'brightness(0.9)')}
+          onMouseLeave={e => (e.currentTarget.style.filter = 'brightness(1)')}>
+          Subscribe
+        </button>
       </div>
     </div>
   )
