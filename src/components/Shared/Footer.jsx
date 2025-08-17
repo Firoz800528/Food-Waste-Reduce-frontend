@@ -1,7 +1,27 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
+import { useAuth } from '../../hooks/useAuth'
+import useRole from '../../hooks/useRole'
 
 const Footer = () => {
+  const { user } = useAuth()
+  const [role, isRoleLoading] = useRole()
   const brandColor = '#F1AA5F'
+  const primaryHoverColor = '#d19950'
+
+  const dashboardPath = isRoleLoading
+    ? '/dashboard'
+    : role === 'restaurant'
+    ? '/dashboard/restaurant'
+    : role === 'admin'
+    ? '/dashboard/admin'
+    : role === 'charity'
+    ? '/dashboard/charity'
+    : '/dashboard/user'
+
+  const navLinkClass = ({ isActive }) =>
+    `text-sm transition-colors duration-200 ${
+      isActive ? 'text-black dark:text-white' : 'text-gray-700 dark:text-gray-300'
+    } hover:text-[#F1AA5F] hover:underline`
 
   return (
     <footer className="bg-gray-100 dark:bg-gray-900 text-gray-700 dark:text-gray-300 mt-20 border-t border-gray-300 dark:border-gray-700">
@@ -30,21 +50,24 @@ const Footer = () => {
           </h3>
           <ul className="space-y-2 text-sm">
             <li>
-              <Link
-                to="/about"
-                className="hover:underline hover:text-[#F1AA5F] transition-colors duration-200"
-              >
-                About Us
-              </Link>
+              <NavLink to="/" className={navLinkClass}>Home</NavLink>
             </li>
             <li>
-              <Link
-                to="/contact"
-                className="hover:underline hover:text-[#F1AA5F] transition-colors duration-200"
-              >
-                Contact
-              </Link>
+              <NavLink to="/about" className={navLinkClass}>About Us</NavLink>
             </li>
+            <li>
+              <NavLink to="/contact" className={navLinkClass}>Contact</NavLink>
+            </li>
+            {user && (
+              <>
+                <li>
+                  <NavLink to="/alldonations" className={navLinkClass}>All Donations</NavLink>
+                </li>
+                <li>
+                  <NavLink to={dashboardPath} className={navLinkClass}>Dashboard</NavLink>
+                </li>
+              </>
+            )}
           </ul>
         </div>
 
@@ -76,10 +99,10 @@ const Footer = () => {
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-500 hover:text-[#F1AA5F] transition-colors"
-              aria-label="Twitter"
+              aria-label="X"
             >
               <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-                <title>Twitter</title>
+                <title>X</title>
                 <path d="M24 4.557a9.83 9.83 0 01-2.828.775A4.916 4.916 0 0024 2.557a9.864 9.864 0 01-3.127 1.195 4.916 4.916 0 00-8.373 4.482A13.944 13.944 0 011.671 3.149a4.916 4.916 0 001.523 6.574A4.903 4.903 0 01.343 8.6v.061a4.918 4.918 0 003.946 4.827A4.996 4.996 0 012.8 13.18a4.918 4.918 0 004.6 3.417A9.868 9.868 0 010 19.54a13.94 13.94 0 007.548 2.212c9.057 0 14.01-7.503 14.01-14.01 0-.213-.005-.425-.014-.636A10.025 10.025 0 0024 4.557z" />
               </svg>
             </a>
